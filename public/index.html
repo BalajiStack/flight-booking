@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Booking - Duffel API Demo</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-plane"></i> Flight Booking</h1>
+            <p class="subtitle">Search and book flights using Duffel API (Test Mode)</p>
+        </header>
+
+        <main>
+            <!-- Step Navigation -->
+            <div class="step-indicator">
+                <div class="step active" data-step="1">Search Flights</div>
+                <div class="step" data-step="2">Select Offer</div>
+                <div class="step" data-step="3">Passenger Details</div>
+                <div class="step" data-step="4">Confirm Booking</div>
+            </div>
+
+            <!-- Step 1: Flight Search -->
+            <section id="step-search" class="step-content active">
+                <h2><i class="fas fa-search"></i> Find Your Flight</h2>
+                <form id="search-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="origin"><i class="fas fa-plane-departure"></i> From</label>
+                            <input type="text" id="origin" placeholder="City or airport code" required>
+                            <div class="suggestions" id="origin-suggestions"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="destination"><i class="fas fa-plane-arrival"></i> To</label>
+                            <input type="text" id="destination" placeholder="City or airport code" required>
+                            <div class="suggestions" id="destination-suggestions"></div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="departure-date"><i class="fas fa-calendar-alt"></i> Departure Date</label>
+                            <input type="date" id="departure-date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="return-date"><i class="fas fa-calendar-check"></i> Return Date (Optional)</label>
+                            <input type="date" id="return-date">
+                        </div>
+                        <div class="form-group">
+                            <label for="passengers"><i class="fas fa-users"></i> Passengers</label>
+                            <select id="passengers">
+                                <option value="1">1 Adult</option>
+                                <option value="2" selected>2 Adults</option>
+                                <option value="3">3 Adults</option>
+                                <option value="4">4 Adults</option>
+                                <option value="5">5 Adults</option>
+                                <option value="6">6 Adults</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-search"></i> Search Flights
+                    </button>
+                </form>
+                <div id="search-loading" class="loading" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Searching for flights...</p>
+                </div>
+            </section>
+
+            <!-- Step 2: Offers List -->
+            <section id="step-offers" class="step-content">
+                <h2><i class="fas fa-list-alt"></i> Available Flights</h2>
+                <div class="offers-header">
+                    <button class="btn-secondary" id="back-to-search">
+                        <i class="fas fa-arrow-left"></i> Modify Search
+                    </button>
+                    <div class="summary" id="search-summary"></div>
+                </div>
+                <div id="offers-container" class="offers-container">
+                    <!-- Offers will be populated here -->
+                </div>
+                <div id="offers-loading" class="loading" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Loading offers...</p>
+                </div>
+            </section>
+
+            <!-- Step 3: Passenger Details -->
+            <section id="step-passengers" class="step-content">
+                <h2><i class="fas fa-user-friends"></i> Passenger Details</h2>
+                <div class="passenger-form-container">
+                    <form id="passenger-form">
+                        <!-- Passenger fields will be generated here -->
+                    </form>
+                    <div class="form-actions">
+                        <button class="btn-secondary" id="back-to-offers">
+                            <i class="fas fa-arrow-left"></i> Back to Offers
+                        </button>
+                        <button class="btn-primary" id="proceed-to-booking">
+                            Proceed to Booking <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 4: Booking Confirmation -->
+            <section id="step-booking" class="step-content">
+                <h2><i class="fas fa-check-circle"></i> Confirm Booking</h2>
+                <div class="booking-summary">
+                    <div id="booking-details">
+                        <!-- Booking details will be shown here -->
+                    </div>
+                    <div class="payment-section">
+                        <h3><i class="fas fa-credit-card"></i> Test Payment</h3>
+                        <p>This is a test environment. Use the following test card details:</p>
+                        <div class="test-card">
+                            <p><strong>Card Number:</strong> 4242 4242 4242 4242</p>
+                            <p><strong>Expiry:</strong> 12/34</p>
+                            <p><strong>CVC:</strong> 123</p>
+                        </div>
+                        <form id="payment-form">
+                            <div class="form-group">
+                                <label for="card-number">Card Number</label>
+                                <input type="text" id="card-number" placeholder="4242 4242 4242 4242" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="expiry">Expiry (MM/YY)</label>
+                                    <input type="text" id="expiry" placeholder="12/34" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cvc">CVC</label>
+                                    <input type="text" id="cvc" placeholder="123" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-primary" id="confirm-booking">
+                                <i class="fas fa-lock"></i> Confirm Booking
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div id="booking-loading" class="loading" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Processing your booking...</p>
+                </div>
+                <div id="booking-success" class="success-message" style="display: none;">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>Booking Confirmed!</h3>
+                    <p>Your flight has been successfully booked.</p>
+                    <p><strong>Booking ID:</strong> <span id="booking-id"></span></p>
+                    <button class="btn-primary" id="new-search">
+                        <i class="fas fa-search"></i> Search Another Flight
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Flight Booking Demo using Duffel API (Test Mode) | This is a demonstration project</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
