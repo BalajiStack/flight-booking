@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', function() {
         bookingResult: null
     };
 
+    let given_name_array = ['John', 'Jane', 'Alex', 'Emily', 'Michael', 'Sarah', 'David', 'Laura', 'Chris', 'Anna'];
+    let family_name_array = ['Smith', 'Johnson', 'Brown', 'Taylor', 'Miller', 'Wilson', 'Moore', 'Anderson', 'Thomas', 'Jackson'];
+
     // DOM Elements
     const stepContents = document.querySelectorAll('.step-content');
     const steps = document.querySelectorAll('.step');
@@ -349,11 +352,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Set default values for test
         for (let i = 0; i < passengerCount; i++) {
-            document.getElementById(`passenger-${i}-given`).value = `Test${i + 1}`;
-            document.getElementById(`passenger-${i}-family`).value = 'Passenger';
-            document.getElementById(`passenger-${i}-email`).value = `test${i + 1}@example.com`;
-            document.getElementById(`passenger-${i}-phone`).value = '+441234567890'; // Valid UK phone number in E.164 format
-            document.getElementById(`passenger-${i}-dob`).value = '1990-01-01';
+            document.getElementById(`passenger-${i}-given`).value = `${given_name_array[i]}`;
+            document.getElementById(`passenger-${i}-family`).value = `${family_name_array[i]}`;
+            document.getElementById(`passenger-${i}-email`).value = `${given_name_array[i]}@gmail.com`;
+            document.getElementById(`passenger-${i}-phone`).value = `+44123456789${i}`; // Valid UK phone number in E.164 format
+            document.getElementById(`passenger-${i}-dob`).value = `1990-01-0${i+1}`;
         }
     }
 
